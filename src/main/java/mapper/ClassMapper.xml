@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ClassDao">
+	<select id="findAll" resultType="entity.Class">
+		select * from demo_class
+	</select>
+	<!-- #后面对应的是实体的属性（必须和实体大小写一致！），前面对应的是数据库中的字段 （不区分大小写！）-->
+	<insert id="insert">
+		insert into demo_class values(#{classId},#{className},#{subJect})
+	</insert>
+	<!--只要传入的类型是个变量，#后面跟的可以是任意字母，也可以是任意数字，只要前面的属性对应实体的属性  -->
+	<delete id="delete">
+		DELETE from demo_class where classid=#{TestId}
+	</delete>
+	<update id="update">
+		update demo_class set classname=#{className} where classid=#{classId}
+	</update>
+	<!-- 注意事项：
+	查询需要声明返回类型！
+	动态sql语句中test="参数是实体类的属性，必须和实体的大小写一致！"
+	 -->
+	<select id="findBy" resultType="entity.Class">
+		select * from demo_class
+		<where>
+			<if test="classId!=0" >
+				classid=#{classId}
+			</if>
+			<if test="className!=null">
+				and classname=#{className}
+			</if>
+		</where>
+	</select>
+	<select id="findString" resultType="entity.Class" parameterType="String">
+		select * from demo_class where classname=#{sss}
+	</select>
+
+	<!--一对多的操作：所谓一对多，就是查询出来的Class中包含多个Student信息，然后通过先遍历Class，然后遍历Student就可以获取学生的信息了-->
+	<!-- 用于多表查询，select id不能和单表查询的一样，不然会报错，所以改成了findAll1 -->
+	<select id="findAll1" resultMap="classMap">
+		select c.classid,c.classname,c.subject,s.studentid,s.name,s.age,s.mark,s.classid from demo_class c,demo_student s where c.classid=s.classid
+	</select>
+	<resultMap type="entity.Class" id="classMap">
+		<id property="classId" column="classid"></id>
+		<result property="className" column="classname"></result>
+		<result property="subJect" column="subject"></result>
+		<collection property="stu" ofType="entity.Student">
+		<id property="studentId" column="studentId"></id>
+		<result property="classId" column="classid"></result>
+		<result property="name" column="name"></result>
+		<result property="mark" column="mark"></result>
+		<result property="age" column="age"></result>
+		</collection>
+	</resultMap>
+</mapper>
