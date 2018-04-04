@@ -7,6 +7,7 @@ public class Class {
 	private String className;
 	private String subJect;
 	private List<Student> stu;
+
 	public List<Student> getStu() {
 		return stu;
 	}

@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="dao.ClassDao">
+    <insert id="insert">
+		INSERT t_class(class_name) VALUES (#{className});
+	</insert>
+    <update id="update">
+		UPDATE t_class SET class_name = #{className} WHERE class_id = #{classId};
+	</update>
+    <delete id="delete">
+		DELETE FROM t_class WHERE class_id = #{classId};
+	</delete>
+
+    <select id="findAll" resultType="entity.Class">
+		SELECT * FROM t_class;
+	</select>
+    <select id="findBy" resultType="entity.Class">
+		SELECT * FROM t_class WHERE class_id = #{classId};
+	</select>
+    <select id="findString" resultType="entity.Class">
+		select * from t_class where class_name = #{sss}
+	</select>
+    <select id="findOneToMany" resultMap="c">
+        select c.class_id,c.class_name,s.student_id,s.student_name,s.class_id from t_class c,t_student s where c.class_id=s.class_id
+    </select>
+    <resultMap id="c" type="entity.Class">
+        <id property="classId" column="class_id"/>
+        <result property="className" column="class_name"/>
+        <collection property="stu" ofType="entity.Student">
+            <id property="studentId" column="student_id"/>
+            <result property="classId" column="class_id"/>
+            <result property="name" column="student_name"/>
+            <result property="sex" column="student_sex"/>
+        </collection>
+    </resultMap>
+</mapper>

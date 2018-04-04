@@ -2,11 +2,21 @@ package entity;
 
 public class Student {
 	private int studentId;
-	private String name;
 	private int age;
 	private int mark;
 	private int classId;
+	private String name;
+	private String sex;
 	private Class cl;
+
+	public String getSex() {
+		return sex;
+	}
+
+	public void setSex(String sex) {
+		this.sex = sex;
+	}
+
 	public Class getCl() {
 		return cl;
 	}

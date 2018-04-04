@@ -29,8 +29,7 @@
 	</environments>
 <!-- 配置映射信息 -->
 	<mappers>
-		<!--<mapper resource="mapper/ClassMapper.xml"></mapper>-->
-		<!--<mapper resource="mapper/StudentMapper.xml"></mapper>-->
-		<mapper resource="mapper/UserMapper.xml"></mapper>
+		<mapper resource="mapper/ClassMapper.xml"></mapper>
+		<mapper resource="mapper/StudentMapper.xml"></mapper>
 	</mappers>
 </configuration>
