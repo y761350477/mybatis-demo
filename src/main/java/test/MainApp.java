@@ -18,6 +18,11 @@ public class MainApp {
         // 获取班级信息 Created by admin.
         ClassDao t_class = session.getMapper(dao.ClassDao.class); // 获取封装的映射信息
 
+        // SelectByArray的数组参数查询方法 Created by YC.
+        method_select_array(t_class);
+        // DeleteByArray的数组参数删除方法 Created by YC.
+        method_delete_array(session, t_class);
+
 //        testMehod1(t_class);
 
 //        testMethod2(t_class);
@@ -45,8 +50,8 @@ public class MainApp {
          * @author YC
          * @create 2018/4/5 7:49.
          */
-        System.out.println("##根据Map类型查询：");
-        testMethod7(t_class);
+//        System.out.println("##根据Map类型查询：");
+//        testMethod7(t_class);
 
         /**
          * 一对多的操作
@@ -67,6 +72,19 @@ public class MainApp {
          */
 //        testMethod9(session);
 
+    }
+
+    private static void method_delete_array(SqlSession session, ClassDao t_class) {
+        int[] deleteByArray = {1, 2, 3, 4};
+        int deleteByArrayResult = t_class.deleteByArray(deleteByArray);
+        session.commit();
+        System.out.println(deleteByArrayResult);
+    }
+
+    private static void method_select_array(ClassDao t_class) {
+        int[] stunos = {1, 2, 3, 4};
+        List<Class> selectByArray = t_class.selectByArray(stunos);
+        System.out.println(selectByArray.get(0).getClassId());
     }
 
     private static void testMethod9(SqlSession session) {

@@ -11,6 +11,19 @@
     <delete id="delete">
 		DELETE FROM t_class WHERE class_id = #{classId};
 	</delete>
+    <delete id="deleteByArray">
+        delete from t_class where class_id in
+        <foreach collection="array" open="(" separator="," close=")" item="id">
+            #{id}
+        </foreach>
+    </delete>
+    <!-- item 和 要传进来的对象名称没有关系, 只是表示要遍历的对象 -->
+    <select id="selectByArray" resultType="entity.Class">
+        select * from t_class where class_id in
+        <foreach item="stunos" collection="array" open="(" close=")" separator=",">
+            #{stunos}
+        </foreach>
+    </select>
 
     <select id="findAll" resultType="entity.Class">
 		SELECT * FROM t_class;

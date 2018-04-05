@@ -21,4 +21,8 @@ public interface ClassDao {
     Class findString(String a);
 
     Class findByMap(Map map);
+
+    List<Class> selectByArray(int[] stunos);
+
+    int deleteByArray(int[] stunos);
 }
