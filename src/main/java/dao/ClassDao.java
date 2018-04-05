@@ -1,15 +1,24 @@
 package dao;
 
-import java.util.List;
-
 import entity.Class;
 
+import java.util.List;
+import java.util.Map;
+
 public interface ClassDao {
-	public List<Class> findAll();
-	public List<Class> findOneToMany();
-	public int insert(Class c);
-	public int delete(Class c);
-	public int update(Class c);
-	public Class findBy(Class c);
-	public Class findString(String a);
+    List<Class> findAll();
+
+    List<Class> findOneToMany();
+
+    int insert(Class c);
+
+    int delete(Class c);
+
+    int update(Class c);
+
+    Class findBy(Class c);
+
+    Class findString(String a);
+
+    Class findByMap(Map map);
 }

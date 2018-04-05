@@ -24,6 +24,9 @@
     <select id="findOneToMany" resultMap="c">
         select c.class_id,c.class_name,s.student_id,s.student_name,s.class_id from t_class c,t_student s where c.class_id=s.class_id
     </select>
+    <select id="findByMap" resultType="entity.Class">
+        SELECT * FROM t_class WHERE class_id = #{classId} AND class_name = #{className};
+    </select>
     <resultMap id="c" type="entity.Class">
         <id property="classId" column="class_id"/>
         <result property="className" column="class_name"/>
