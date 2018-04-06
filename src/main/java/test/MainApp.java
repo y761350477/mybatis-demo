@@ -7,7 +7,6 @@ import entity.Student;
 import org.apache.ibatis.session.SqlSession;
 import sqlsession.SqlSessionFactoryUtil;
 
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -19,75 +18,43 @@ public class MainApp {
         ClassDao t_class = session.getMapper(dao.ClassDao.class); // 获取封装的映射信息
 
         // SelectByArray的数组参数查询方法 Created by YC.
-        method_select_array(t_class);
+        select_array(t_class);
         // DeleteByArray的数组参数删除方法 Created by YC.
-        method_delete_array(session, t_class);
-
-//        testMehod1(t_class);
-
-//        testMethod2(t_class);
-
-//        testMethod3(session, t_class);
-
-//        testMethod4(t_class);
-
-//        System.out.println("##修改数据:");
-//        testMethod5(session, t_class);
-
-        /**
-         * 映射里面设置参数类型为String的效果!
-         * 注意: 当查询出来的结果是多个时, 是会报错的!
-         *
-         * @author admin
-         * @create 2018/4/4 13:37.
-         */
-//        System.out.println("##根据Sting类型查询:");
-//        testMethod6(t_class);
-
-        /**
-         * Map为参的使用
-         *
-         * @author YC
-         * @create 2018/4/5 7:49.
-         */
-//        System.out.println("##根据Map类型查询：");
-//        testMethod7(t_class);
-
-        /**
-         * 一对多的操作
-         * 查找同一个班的学生！
-         * 注:
-         *  1. 在使用一对多的情况下, 在dao方法中对返回值存在过疑惑, 为什么是Class类型的, 而没有任何的Student信息, 通过测试得到Student对象作为Class的属性, 同样具有数据;
-         *
-         * @author admin
-         * @create 2018/4/4 16:44.
-         */
-//        testMethod8(t_class);
-
-        /**
-         * 多对一的操作
-         *
-         * @author admin
-         * @create 2018/4/4 16:54.
-         */
-//        testMethod9(session);
-
+        delete_array(session, t_class);
     }
 
-    private static void method_delete_array(SqlSession session, ClassDao t_class) {
+    /**
+     * 动态sql, 使用数组参数做删除
+     *
+     * @author YC
+     * @create 2018/4/6 9:18.
+     */
+    private static void delete_array(SqlSession session, ClassDao t_class) {
         int[] deleteByArray = {1, 2, 3, 4};
         int deleteByArrayResult = t_class.deleteByArray(deleteByArray);
         session.commit();
         System.out.println(deleteByArrayResult);
     }
 
-    private static void method_select_array(ClassDao t_class) {
+    /**
+     * 动态sql, 使用数组参数做查询
+     *
+     * @author YC
+     * @create 2018/4/6 9:19.
+     */
+    private static void select_array(ClassDao t_class) {
         int[] stunos = {1, 2, 3, 4};
         List<Class> selectByArray = t_class.selectByArray(stunos);
         System.out.println(selectByArray.get(0).getClassId());
     }
 
-    private static void testMethod9(SqlSession session) {
+    /**
+     * 多对一的操作
+     *
+     * @author admin
+     * @create 2018/4/4 16:54.
+     */
+    private static void select_many_to_one(SqlSession session) {
         StudentDao t_student = session.getMapper(StudentDao.class); // 获取封装的映射信息
         List<Student> lst = t_student.findManyToOne();
         for (Student st : lst) {
@@ -96,7 +63,16 @@ public class MainApp {
         }
     }
 
-    private static void testMethod8(ClassDao t_class) {
+    /**
+     * 一对多的操作
+     * 查找同一个班的学生！
+     * 注:
+     * 1. 在使用一对多的情况下, 在dao方法中对返回值存在过疑惑, 为什么是Class类型的, 而没有任何的Student信息, 通过测试得到Student对象作为Class的属性, 同样具有数据;
+     *
+     * @author YC
+     * @create 2018/4/4 16:44.
+     */
+    private static void select_one_to_many(ClassDao t_class) {
         List<Class> lc = t_class.findOneToMany();
         for (Class cl : lc) {
             System.out.println("多表查阅同一个班级的学生：\t");
@@ -106,7 +82,13 @@ public class MainApp {
         }
     }
 
-    private static void testMethod7(ClassDao t_class) {
+    /**
+     * 查询_方法参数为集合.
+     *
+     * @author YC
+     * @create 2018/4/5 23:29.
+     */
+    private static void select_map(ClassDao t_class) {
         Map class_map = new HashMap();
         class_map.put("classId", 1);
         class_map.put("className", "一班");
@@ -114,11 +96,24 @@ public class MainApp {
         System.out.println(t_classByMap.getClassId() + "\t" + t_classByMap.getClassName());
     }
 
-    private static void testMethod6(ClassDao t_class) {
+    /**
+     * 查询_参数类型为String
+     * 注意: 当查询出来的结果是多个时, 是会报错的!
+     *
+     * @author admin
+     * @create 2018/4/4 13:37.
+     */
+    private static void select_string(ClassDao t_class) {
         System.out.println(t_class.findString("一班").getClassId());
     }
 
-    private static void testMethod5(SqlSession session, ClassDao t_class) {
+    /**
+     * 更新
+     *
+     * @author YC
+     * @create 2018/4/5 23:30.
+     */
+    private static void update(SqlSession session, ClassDao t_class) {
         Class class_upd = new Class();
         class_upd.setClassId(1);
         class_upd.setClassName("修改二班");
@@ -128,7 +123,13 @@ public class MainApp {
         System.out.println("---------------------------------------");
     }
 
-    private static void testMethod4(ClassDao t_class) {
+    /**
+     * 删除
+     *
+     * @author YC
+     * @create 2018/4/5 23:31.
+     */
+    private static void delete(ClassDao t_class) {
         System.out.println("##删除数据:");
         Class class_del = new Class();
         class_del.setClassId(12);
@@ -137,7 +138,13 @@ public class MainApp {
         System.out.println("---------------------------------------");
     }
 
-    private static void testMethod3(SqlSession session, ClassDao t_class) {
+    /**
+     * 添加
+     *
+     * @author YC
+     * @create 2018/4/6 9:22.
+     */
+    private static void insert(SqlSession session, ClassDao t_class) {
         System.out.println("##插入数据:");
 
         Class class_ins = new Class();
@@ -149,7 +156,13 @@ public class MainApp {
         System.out.println("--------------------------------------");
     }
 
-    private static void testMethod2(ClassDao t_class) {
+    /**
+     * 查询_根据属性
+     *
+     * @author YC
+     * @create 2018/4/6 9:22.
+     */
+    private static void findBy(ClassDao t_class) {
         System.out.println("##根据条件查询信息:");
         Class class_sel_by = new Class();
         class_sel_by.setClassId(10);
@@ -158,7 +171,13 @@ public class MainApp {
         System.out.println("--------------------------------------");
     }
 
-    private static void testMehod1(ClassDao t_class) {
+    /**
+     * 查询
+     *
+     * @author YC
+     * @create 2018/4/6 9:22.
+     */
+    private static void select(ClassDao t_class) {
         List<Class> t_classAll = t_class.findAll();
         System.out.println("##查询表中班级信息:");
         for (Class classInfo : t_classAll) {
