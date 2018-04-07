@@ -2,8 +2,10 @@ package test;
 
 import dao.ClassDao;
 import dao.StudentDao;
+import dao.UserDao;
 import entity.Class;
 import entity.Student;
+import entity.User;
 import org.apache.ibatis.session.SqlSession;
 import sqlsession.SqlSessionFactoryUtil;
 
@@ -16,7 +18,9 @@ public class MainApp {
     public static void main(String[] args) {
         SqlSession session = SqlSessionFactoryUtil.getSqlSession();//实例化session
         // 获取班级信息 Created by admin.
-        ClassDao t_class = session.getMapper(dao.ClassDao.class); // 获取封装的映射信息
+//        ClassDao t_class = session.getMapper(dao.ClassDao.class); // 获取封装的映射信息
+
+        UserDao t_user = session.getMapper(dao.UserDao.class);
 
         // SelectByArray的数组参数查询方法 Created by YC.
 //        select_array(t_class);
@@ -46,6 +50,12 @@ public class MainApp {
 
         // 动态SQL_SET_TRIM Created by YC.
 //        update_set_trim(session, t_class);
+
+        // 注解的使用 Created by YC.
+        List<User> select_all = t_user.select_all();
+        for (User user : select_all) {
+            System.out.println(user.getUserName());
+        }
     }
 
     private static void update_set_trim(SqlSession session, ClassDao t_class) {
