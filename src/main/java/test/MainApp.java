@@ -7,6 +7,7 @@ import entity.Student;
 import org.apache.ibatis.session.SqlSession;
 import sqlsession.SqlSessionFactoryUtil;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -18,9 +19,122 @@ public class MainApp {
         ClassDao t_class = session.getMapper(dao.ClassDao.class); // 获取封装的映射信息
 
         // SelectByArray的数组参数查询方法 Created by YC.
-        select_array(t_class);
+//        select_array(t_class);
         // DeleteByArray的数组参数删除方法 Created by YC.
-        delete_array(session, t_class);
+//        delete_array(session, t_class);
+        // SelectByArrayList Created by YC.
+//        select_arrayList(t_class);
+
+//        select_hashMap(t_class);
+
+//        insert_hashMap(session, t_class);
+
+        // 动态SQL_IF Created by YC.
+//        select_if(t_class);
+
+        // 动态SQL_CHOOSE Created by YC.
+//        select_choose(t_class);
+
+        // 动态SQL_WHERE Created by YC.
+//        select_where(t_class);
+
+        // 动态SQL_WHERE_TRIM Created by YC.
+//        select_where_trim(t_class);
+
+        // 动态SQL_SET Created by YC.
+//        update_set(session, t_class);
+
+        // 动态SQL_SET_TRIM Created by YC.
+//        update_set_trim(session, t_class);
+    }
+
+    private static void update_set_trim(SqlSession session, ClassDao t_class) {
+        Class class_update = new Class();
+        class_update.setClassId(1);
+        class_update.setClassName(null);
+        int select_update = t_class.update_trim(class_update);
+        System.out.println(select_update);
+        session.commit();
+    }
+
+    private static void update_set(SqlSession session, ClassDao t_class) {
+        Class class_set = new Class();
+        class_set.setClassId(1);
+        class_set.setClassName(null);
+        int select_set = t_class.update_set(class_set);
+        System.out.println(select_set);
+        session.commit();
+    }
+
+    private static void select_where_trim(ClassDao t_class) {
+        Class class_where = new Class();
+        class_where.setClassId(1);
+        class_where.setClassName(null);
+        List<Class> select_trim = t_class.select_trim(class_where);
+        for (Class class_info : select_trim) {
+            System.out.println(class_info.getClassName());
+        }
+    }
+
+    private static void select_where(ClassDao t_class) {
+        Class class_where = new Class();
+        class_where.setClassId(1);
+        class_where.setClassName(null);
+        List<Class> select_where = t_class.select_where(class_where);
+        for (Class class_info : select_where) {
+            System.out.println(class_info.getClassName());
+        }
+    }
+
+    private static void select_choose(ClassDao t_class) {
+        Class class_choose = new Class();
+        class_choose.setClassId(2);
+        class_choose.setClassName("一班");
+        List<Class> select_choose = t_class.select_choose(class_choose);
+        for (Class class_info : select_choose) {
+            System.out.println(class_info.getClassName());
+        }
+    }
+
+    private static void select_if(ClassDao t_class) {
+        Class class_info = new Class();
+        class_info.setClassId(2);
+        class_info.setClassName("一班");
+        List<Class> select_if = t_class.select_if(class_info);
+        for (Class class_value : select_if) {
+            System.out.println(class_value.getClassId());
+        }
+    }
+
+    private static void insert_hashMap(SqlSession session, ClassDao t_class) {
+        Map map = new HashMap();
+        map.put("class_id", 21);
+        map.put("class_name", "班级");
+        int insertByHashMap = t_class.insertByHashMap(map);
+        System.out.println(insertByHashMap);
+        session.commit();
+    }
+
+    private static void select_hashMap(ClassDao t_class) {
+        Map map = new HashMap();
+        map.put("a", 1);
+        map.put("b", 2);
+        List<Class> selectByHashMap = t_class.selectByHashMap(map);
+        for (Class class_info : selectByHashMap) {
+            System.out.println(class_info.getClassName());
+        }
+    }
+
+    private static void select_arrayList(ClassDao t_class) {
+        List list = new ArrayList();
+        list.add(1);
+        list.add(2);
+        list.add(3);
+        list.add(4);
+        List<Class> selectByArrayList = t_class.selectByArrayList(list);
+        for (Class classInfo : selectByArrayList) {
+            System.out.println(classInfo.getClassName());
+        }
     }
 
     /**

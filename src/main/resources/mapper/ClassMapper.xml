@@ -5,40 +5,94 @@
     <insert id="insert">
 		INSERT t_class(class_name) VALUES (#{className});
 	</insert>
-    <update id="update">
-		UPDATE t_class SET class_name = #{className} WHERE class_id = #{classId};
-	</update>
+
     <delete id="delete">
 		DELETE FROM t_class WHERE class_id = #{classId};
 	</delete>
+
+    <update id="update">
+		UPDATE t_class SET class_name = #{className} WHERE class_id = #{classId};
+	</update>
+
+    <select id="findAll" resultType="entity.Class">
+		SELECT * FROM t_class;
+	</select>
+
+    <select id="findBy" resultType="entity.Class">
+		SELECT * FROM t_class WHERE class_id = #{classId};
+	</select>
+
+    <select id="findString" resultType="entity.Class">
+		select * from t_class where class_name = #{sss}
+	</select>
+
+    <!--
+    map集合为参数的情况1:
+        1. 在dao接口中使用@Param注解map集合;
+        2. collection="param"时, item="key" ${key}表示map的value值;
+        3. collection="param.keys"时, item="key" ${key}表示map的key值;
+        4. collection="param.keys"时, item="key" #{params[${key}]}表示map的value值, 等同与1的效果;
+        注: 1. @Param可以重名, 即多个map集合同样的注解名情况是不影响的;
+    -->
+    <insert id="insertByHashMap">
+        INSERT t_class
+        <foreach collection="params.keys" open="(" separator="," close=")" item="key">
+            ${key}
+        </foreach>
+        VALUES
+        <foreach collection="params" open="(" separator="," close=")" item="key">
+            #{key}
+        </foreach>
+    </insert>
+
+    <select id="selectByHashMap" resultType="entity.Class" parameterType="java.util.Map">
+        SELECT * FROM t_class WHERE class_id IN
+        <foreach collection="params" open="(" separator="," close=")" item="index">
+            #{index}
+        </foreach>
+    </select>
+
+    <!--
+    map集合为参数的简单使用
+        1. #{classId} 对应 map的key值才能设置value值;
+    -->
+    <select id="findByMap" resultType="entity.Class">
+        SELECT * FROM t_class WHERE class_id = #{classId} AND class_name = #{className};
+    </select>
+
+    <!--
+    数组为参数的情况
+    -->
+    <select id="selectByArray" resultType="entity.Class">
+        select * from t_class where class_id in
+        <foreach collection="array" open="(" separator="," close=")" item="stunos">
+            #{stunos}
+        </foreach>
+    </select>
+
     <delete id="deleteByArray">
         delete from t_class where class_id in
         <foreach collection="array" open="(" separator="," close=")" item="id">
             #{id}
         </foreach>
     </delete>
-    <!-- item 和 要传进来的对象名称没有关系, 只是表示要遍历的对象 -->
-    <select id="selectByArray" resultType="entity.Class">
-        select * from t_class where class_id in
-        <foreach item="stunos" collection="array" open="(" close=")" separator=",">
-            #{stunos}
+
+    <!--
+    List集合为参数的情况:
+        item 和 要传进来的对象名称没有关系, 只是表示要遍历的对象
+    -->
+    <select id="selectByArrayList" resultType="entity.Class">
+        SELECT * FROM t_class WHERE class_id IN
+        <foreach collection="list" open="(" separator="," close=")" item="index">
+            #{index}
         </foreach>
     </select>
 
-    <select id="findAll" resultType="entity.Class">
-		SELECT * FROM t_class;
-	</select>
-    <select id="findBy" resultType="entity.Class">
-		SELECT * FROM t_class WHERE class_id = #{classId};
-	</select>
-    <select id="findString" resultType="entity.Class">
-		select * from t_class where class_name = #{sss}
-	</select>
+    <!--
+    一对多的情况
+    -->
     <select id="findOneToMany" resultMap="c">
         select c.class_id,c.class_name,s.student_id,s.student_name,s.class_id from t_class c,t_student s where c.class_id=s.class_id
-    </select>
-    <select id="findByMap" resultType="entity.Class">
-        SELECT * FROM t_class WHERE class_id = #{classId} AND class_name = #{className};
     </select>
     <resultMap id="c" type="entity.Class">
         <id property="classId" column="class_id"/>
@@ -50,4 +104,95 @@
             <result property="sex" column="student_sex"/>
         </collection>
     </resultMap>
+
+    <!--
+    动态SQL的使用
+    -->
+    <!-- if的使用 -->
+    <select id="select_if" resultType="entity.Class">
+        SELECT * FROM t_class
+        <if test="classId != 1">
+            WHERE class_name = #{className}
+        </if>
+    </select>
+
+    <!--
+    choose需要配置when、otherwise来使用, 相当于java中的switch
+    注: 1. 如果两个when都满足条件, 则只执行第一个, 没有满足条件则执行otherwise的方法
+    -->
+    <select id="select_choose" resultType="entity.Class">
+        SELECT * FROM t_class
+        <choose>
+            <when test="classId == 2">
+                WHERE class_name = #{className}
+            </when>
+            <when test="classId == 2">
+                WHERE class_id = #{classId}
+            </when>
+            <otherwise>
+                WHERE class_id = 15
+            </otherwise>
+        </choose>
+    </select>
+
+    <!--
+    where的使用用于解决多个IF判断情况下的where关键字和AND、OR的处理问题
+    where会自动判断语句, 如果成立的情况下则加上where,对于前缀为AND、OR开头的也会过滤
+    -->
+    <select id="select_where" resultType="entity.Class">
+        select * from t_class
+        <where>
+            <if test="classId != null">
+                class_id = #{classId}
+            </if>
+            <if test="className != null">
+                AND class_name = #{className}
+            </if>
+        </where>
+    </select>
+    <!--
+    trim的使用:
+    下面的自定义效果和where相同
+    -->
+    <select id="select_trim" resultType="entity.Class">
+        select * from t_class
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            <if test="classId != null">
+                class_id = #{classId}
+            </if>
+            <if test="className != null">
+                AND class_name = #{className}
+            </if>
+        </trim>
+    </select>
+
+    <!--
+    set的使用, 可以像where标签一样过滤掉不必要的符号;
+    -->
+    <update id="update_set">
+        update t_class
+        <set>
+            <if test="classId != null">
+                class_id = #{classId},
+            </if>
+            <if test="className != null">
+                class_name = #{className}
+            </if>
+        </set>
+        WHERE class_id = 1
+    </update>
+
+    <update id="update_trim">
+        update t_class
+        <trim prefix="SET" suffixOverrides=",">
+            <if test="classId != null">
+                class_id = #{classId},
+            </if>
+            <if test="className != null">
+                class_name = #{className}
+            </if>
+        </trim>
+        WHERE class_id = 1
+    </update>
+
 </mapper>
