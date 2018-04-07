@@ -2,10 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="8fc4828e-b36f-4655-b8a8-df2b8650b6a5" name="Default" comment="">
-      <change afterPath="$PROJECT_DIR$/src/main/java/dao/UserDao.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/entity/User.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/test/MainApp.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/test/MainApp.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/resources/mybatis-config.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/mybatis-config.xml" afterDir="false" />
     </list>
     <ignored path="$PROJECT_DIR$/out/" />
@@ -49,8 +46,8 @@
       <file leaf-file-name="mybatis-config.xml" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="262">
-              <caret line="37" column="37" lean-forward="true" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="37" />
+            <state relative-caret-position="242">
+              <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
             </state>
           </provider>
         </entry>
@@ -82,11 +79,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="UserDao.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="UserDao.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/dao/UserDao.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="200">
-              <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
+            <state relative-caret-position="320">
+              <caret line="17" column="35" lean-forward="true" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
               <folding>
                 <element signature="imports" expanded="true" />
               </folding>
@@ -94,7 +91,7 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="MainApp.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="MainApp.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/test/MainApp.java">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="260">
@@ -591,8 +588,8 @@
         <option value="$PROJECT_DIR$/src/main/java/dao/User.java" />
         <option value="$PROJECT_DIR$/src/main/java/test/MainApp.java" />
         <option value="$PROJECT_DIR$/src/main/java/entity/User.java" />
-        <option value="$PROJECT_DIR$/src/main/resources/mybatis-config.xml" />
         <option value="$PROJECT_DIR$/src/main/java/dao/UserDao.java" />
+        <option value="$PROJECT_DIR$/src/main/resources/mybatis-config.xml" />
       </list>
     </option>
   </component>
@@ -830,7 +827,7 @@
       <workItem from="1522885331414" duration="5904000" />
       <workItem from="1522919254739" duration="13206000" />
       <workItem from="1522977181801" duration="3187000" />
-      <workItem from="1523091613416" duration="20465000" />
+      <workItem from="1523091613416" duration="20524000" />
     </task>
     <task id="LOCAL-00001" summary="1. 配置最简单的mybatis应用(问题却不断发生, 心累);">
       <created>1520218609949</created>
@@ -867,11 +864,18 @@
       <option name="project" value="LOCAL" />
       <updated>1523109960141</updated>
     </task>
-    <option name="localTasksCounter" value="6" />
+    <task id="LOCAL-00006" summary="1. mybatis基于注解的简单使用;">
+      <created>1523114468761</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1523114468761</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="61144000" />
+    <option name="totallyTimeSpent" value="61203000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -980,7 +984,8 @@
     <MESSAGE value="1. 数组为参数的使用;" />
     <MESSAGE value="1. 代码整洁化;" />
     <MESSAGE value="1. Mybatis的动态SQL使用:IF、CHOOSE(WHEN、OTHERWISE)、WHERE、TRIM、SET、FOREACH(参看2中的参数);&#10;2. dao方法参数为Map、array、arrayList的使用;" />
-    <option name="LAST_COMMIT_MESSAGE" value="1. Mybatis的动态SQL使用:IF、CHOOSE(WHEN、OTHERWISE)、WHERE、TRIM、SET、FOREACH(参看2中的参数);&#10;2. dao方法参数为Map、array、arrayList的使用;" />
+    <MESSAGE value="1. mybatis基于注解的简单使用;" />
+    <option name="LAST_COMMIT_MESSAGE" value="1. mybatis基于注解的简单使用;" />
   </component>
   <component name="editorHistoryManager">
     <entry file="file://$PROJECT_DIR$/src/main/java/dao/StudentDao.java">
@@ -1391,6 +1396,23 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/dao/UserDao.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="320">
+          <caret line="17" column="35" lean-forward="true" selection-start-line="17" selection-start-column="35" selection-end-line="17" selection-end-column="35" />
+          <folding>
+            <element signature="imports" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="242">
+          <caret line="36" column="37" lean-forward="true" selection-start-line="36" selection-start-column="37" selection-end-line="36" selection-end-column="37" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/test/MainApp.java">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="260">
@@ -1417,23 +1439,6 @@
             <element signature="method#findBy#0;class#MainApp#0" />
             <element signature="docComment;method#select#0;class#MainApp#0" />
             <element signature="method#select#0;class#MainApp#0" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/resources/mybatis-config.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="262">
-          <caret line="37" column="37" lean-forward="true" selection-start-line="37" selection-start-column="8" selection-end-line="37" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/dao/UserDao.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="200">
-          <caret line="11" column="19" selection-start-line="11" selection-start-column="19" selection-end-line="11" selection-end-column="19" />
-          <folding>
-            <element signature="imports" expanded="true" />
           </folding>
         </state>
       </provider>

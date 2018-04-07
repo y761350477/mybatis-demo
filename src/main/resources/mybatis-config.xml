@@ -32,9 +32,8 @@
 	</environments>
 <!-- 配置映射信息 -->
 	<mappers>
-		<!--<mapper resource="mapper/ClassMapper.xml"></mapper>-->
+		<mapper resource="mapper/ClassMapper.xml"></mapper>
 		<mapper resource="mapper/StudentMapper.xml"></mapper>
-		<!-- 基于注解的方式需要使用class指定 -->
 		<mapper class="dao.UserDao"/>
 	</mappers>
 </configuration>
