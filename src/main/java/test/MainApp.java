@@ -18,7 +18,7 @@ public class MainApp {
     public static void main(String[] args) {
         SqlSession session = SqlSessionFactoryUtil.getSqlSession();//实例化session
         // 获取班级信息 Created by admin.
-//        ClassDao t_class = session.getMapper(dao.ClassDao.class); // 获取封装的映射信息
+        ClassDao t_class = session.getMapper(dao.ClassDao.class); // 获取封装的映射信息
 
         UserDao t_user = session.getMapper(dao.UserDao.class);
 
@@ -52,6 +52,10 @@ public class MainApp {
 //        update_set_trim(session, t_class);
 
         // 注解的使用 Created by YC.
+//        select_annotation(t_user);
+    }
+
+    private static void select_annotation(UserDao t_user) {
         List<User> select_all = t_user.select_all();
         for (User user : select_all) {
             System.out.println(user.getUserName());
@@ -253,11 +257,12 @@ public class MainApp {
      * @author YC
      * @create 2018/4/5 23:31.
      */
-    private static void delete(ClassDao t_class) {
+    private static void delete(SqlSession session, ClassDao t_class) {
         System.out.println("##删除数据:");
         Class class_del = new Class();
         class_del.setClassId(12);
         int delete = t_class.delete(class_del);
+        session.commit();
         System.out.println("删除结果: " + delete);
         System.out.println("---------------------------------------");
     }
